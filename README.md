@@ -2,7 +2,20 @@ The code is experimental and not maintained as the same degree as our other proj
 
 Update:
 
+31/10/19
+
+The QEMU RISCV HE v0.4 and v0.3 working with the VMM can be downloaded from
+
+<https://github.com/yyshen/qemu-alistair23/tree/mainline/alistair/riscv-hyp-ext-v0.4.next>
+
+<https://github.com/yyshen/qemu-alistair23/tree/mainline/alistair/riscv-hyp-ext-v0.3.next>
+
+They are snapshots of the original repo <https://github.com/alistair23/qemu>, which removed the
+v0.3 branch.
+
+
 30/10/19
+
 master.xml is added to track the current development.
 * The kernel now supports RISCV HE v0.4.
 * Experimental SMP VM support is added to the VMM.
