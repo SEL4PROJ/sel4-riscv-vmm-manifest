@@ -2,7 +2,35 @@ The code is experimental and not maintained as the same degree as our other proj
 
 Update:
 
-31/10/19
+## 07/08/21
+
+Update the master.xml to track RISCV HE v0.6. The QEMU code can be downloaded from
+
+<https://github.com/kvm-riscv/qemu/tree/mainline/anup%2Friscv-hyp-ext-v0.6.1>.
+
+Execute
+```console
+repo init -u https://github.com/SEL4PROJ/sel4-riscv-vmm-manifest.git -m master.xml
+repo sync
+```
+to use the master.xml.
+
+
+To build and run the image with QEMU:
+```console
+mkdir bld
+cd bld
+../init-build.sh -DPLATFORM=spike -DRISCV64=1
+ninja
+cp ../projects/sel4_riscv_vmm/run.sh ./
+./run.sh
+```
+
+The v0.3 and v0.4 supports are removed.
+
+
+
+## 31/10/19
 
 The QEMU RISCV HE v0.4 and v0.3 working with the VMM can be downloaded from
 
