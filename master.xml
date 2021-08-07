@@ -13,6 +13,7 @@
 <manifest>
   <remote fetch="../seL4" name="seL4"/>
   <remote fetch="." name="sel4proj"/>
+  <remote fetch="https://github.com/riscv" name="opensbi"/>
   
   <default remote="seL4" revision="master"/>
   
@@ -31,4 +32,5 @@
     <linkfile dest="settings.cmake" src="settings.cmake"/>
   </project>
   <project name="util_libs.git" path="projects/util_libs" revision="2c4603aa68963e7285ba98d4133b31097d7878a6" upstream="master"/>
+  <project name="opensbi" remote="opensbi" revision="a98258d0b537a295f517bbc8d813007336731fa9" path="tools/opensbi"/>
 </manifest>
