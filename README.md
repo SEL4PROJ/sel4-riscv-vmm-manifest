@@ -2,6 +2,9 @@ The code is experimental and not maintained as the same degree as our other proj
 
 Update:
 
+## 19/08/21
+Now the 4-core SMP VM should work.
+
 ## 07/08/21
 
 Update the master.xml to track RISCV HE v0.6. The QEMU code can be downloaded from
