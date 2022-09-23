@@ -17,20 +17,20 @@
   
   <default remote="seL4" revision="master"/>
   
-  <project name="musllibc.git" path="projects/musllibc" remote="seL4" revision="4a8335b2248d934e2e40386af4f1b0495b3c173d" upstream="sel4"/>
+  <project name="musllibc.git" path="projects/musllibc" remote="seL4" revision="3d6b939e8f05cb1d2a1a8c8166609bf2e652e975" upstream="sel4"/>
   <project name="riscv-pk" path="tools/riscv-pk" remote="seL4" revision="riscv_he_v0.6"/>
   <project name="seL4.git" path="kernel" remote="seL4" revision="riscv_he_v0.6" upstream="riscv_he_v0.6"/>
   <project name="seL4_libs.git" path="projects/seL4_libs" revision="riscv_hyp" upstream="riscv_hyp"/>
-  <project name="seL4_tools.git" path="tools/seL4" revision="148f5241d3395750d97a3f53371e9a9c4cfd357e" upstream="master">
+  <project name="seL4_tools.git" path="tools/seL4" revision="3234b1fb94dea6525e3ba3df205a453baf63c1ae" upstream="master">
     <linkfile dest="CMakeLists.txt" src="cmake-tool/default-CMakeLists.txt"/>
     <linkfile dest="init-build.sh" src="cmake-tool/init-build.sh"/>
     <linkfile dest="griddle" src="cmake-tool/griddle"/>
   </project>
-  <project name="sel4runtime.git" path="projects/sel4runtime" remote="sel4proj" revision="ec3c1348c31ce2c459f9a80a1c79f2237de3a4cd" upstream="master"/>
+  <project name="sel4runtime.git" path="projects/sel4runtime" remote="sel4proj" revision="d935dd05da0cf959e9fd0140af913dc6fdaa0221" upstream="master"/>
   <project name="sel4_riscv_vmm.git" path="projects/sel4_riscv_vmm" remote="sel4proj" upstream="master">
     <linkfile dest="easy-settings.cmake" src="easy-settings.cmake"/>
     <linkfile dest="settings.cmake" src="settings.cmake"/>
   </project>
-  <project name="util_libs.git" path="projects/util_libs" revision="8ed42ff66c586ab2b6dc32f678e00764453754f0" upstream="master"/>
+  <project name="util_libs.git" path="projects/util_libs" revision="5df1034155667093a5e7a435b621067013ed8c26" upstream="master"/>
   <project name="opensbi" remote="opensbi" revision="a98258d0b537a295f517bbc8d813007336731fa9" path="tools/opensbi"/>
 </manifest>

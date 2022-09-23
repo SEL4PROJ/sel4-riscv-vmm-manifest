@@ -1,109 +1,73 @@
-The code is experimental and not maintained as the same degree as our other projects.
+Note: The code is experimental and not maintained as the same degree as our other projects.
 
-Update:
+The VMM supports v0.6.1 of the RISC-V Hypervisor Extension.
 
-## 19/08/21
-Now the 4-core SMP VM should work.
-
-## 07/08/21
-
-Update the master.xml to track RISCV HE v0.6. The QEMU code can be downloaded from
-
-<https://github.com/kvm-riscv/qemu/tree/mainline/anup%2Friscv-hyp-ext-v0.6.1>.
-
-Execute
+## Getting the code
 ```console
 repo init -u https://github.com/SEL4PROJ/sel4-riscv-vmm-manifest.git -m master.xml
 repo sync
 ```
-to use the master.xml.
 
+## Building and running
 
-To build and run the image with QEMU:
+You can either build and run the using the seL4 Docker environment or build natively
+on a platform that is supported by seL4.
+
+Dependencies for building natively:
+* [seL4 host dependencies](https://docs.sel4.systems/projects/buildsystem/host-dependencies.html)
+* [RISC-V GNU toolchain](https://github.com/riscv/riscv-gnu-toolchain)
+* RISC-V QEMU, any mainline version >= v5.1 should work.
+
+### Single-core
 ```console
-mkdir bld
-cd bld
+mkdir build
+cd build
 ../init-build.sh -DPLATFORM=spike -DRISCV64=1
 ninja
 cp ../projects/sel4_riscv_vmm/run.sh ./
 ./run.sh
 ```
 
-The v0.3 and v0.4 supports are removed.
-
-
-
-## 31/10/19
-
-The QEMU RISCV HE v0.4 and v0.3 working with the VMM can be downloaded from
-
-<https://github.com/yyshen/qemu-alistair23/tree/mainline/alistair/riscv-hyp-ext-v0.4.next>
-
-<https://github.com/yyshen/qemu-alistair23/tree/mainline/alistair/riscv-hyp-ext-v0.3.next>
-
-They are snapshots of the original repo <https://github.com/alistair23/qemu>, which removed the
-v0.3 branch.
-
-
-30/10/19
-
-master.xml is added to track the current development.
-* The kernel now supports RISCV HE v0.4.
-* Experimental SMP VM support is added to the VMM.
-
-Execute
+### Multi-core (SMP)
 ```console
-repo init -u https://github.com/SEL4PROJ/sel4-riscv-vmm-manifest.git -m master.xml
-repo sync
-```
-to use the master.xml.
-
-To select the RISCV HE v0.4 with SMP support
-```console
-mkdir bld
-cd bld
-../init-build.sh -DPLATFORM=spike -DRISCV64=1
-ccmake .
-```
-In the config menu:
-* set `KernelRiscvHVersion` to `4` to enable V0.4 support.
-* set `SMP` to `ON` to enable SMP support.
-* set `KernelMaxNumNodes` to `2`, `3`, or `4` to specify the number of cores supported.
-This option is also used to specify the number of VCPUs of an SMP VM.
-
-Having chosen the values, press key `c` then `g` to generate save the new configuration.
-Then, execute the following commands to build and run the VM.
-
-```console
+mkdir build
+cd build
+../init-build.sh -DPLATFORM=spike -DRISCV64=1 -DSMP=1 -DKernelMaxNumNodes=<NUM_NODES>
 ninja
 cp ../projects/sel4_riscv_vmm/run_smp.sh ./
 ./run_smp.sh
 ```
 
-The QEMU RISCV HE v0.4 is from:
+The `KernelMaxNumNodes` option specifies the number of cores supported, it is also used
+to specify the number of VCPUs an SMP VM uses.
 
-[https://github.com/alistair23/qemu/tree/mainline/alistair/riscv-hyp-ext-v0.4.next]
+You can also use `ccmake .` to open the configuration menu and change the number of
+nodes from there. Press the keys `c` and then `g` to generate and save the new config.
 
+## Building a Linux image
 
-The QEMU with RISCV hypervisor extenstion v0.3:
-
-[https://github.com/alistair23/qemu/tree/mainline/alistair/riscv-hyp-ext-v0.3.next]
-
-The RISCV GCC toolchain:
-
-[https://github.com/riscv/riscv-gnu-toolchain]
-
-You can also use the seL4 docker image [https://docs.sel4.systems/Docker.html] for the building environment.
-
-Run the following commands after repo sync:
+The Linux image is included in `projects/sel4_riscv_vmm/linux`, if you would
+like build it yourself, you can use the following instructions:
 
 ```console
-mkdir bld
-cd bld
-../init-build.sh -DPLATFORM=spike -DRISCV64=1
-ninja
-cp ../projects/sel4_riscv_vmm/run.sh ./
-./run.sh
+git clone git@github.com:SEL4PROJ/sel4-riscv-vmm-linux-5.2.git
+make ARCH=riscv CROSS_COMPILE=<RISCV_TOOLCHAIN_PREFIX> sel4vm_defconfig all
 ```
 
-The login is `root/root`.
+If you would like to build an image for the multi-core VMM instead, you'll need to change
+the config. You can enter the menuconfig by executing:
+
+```console
+make ARCH=riscv CROSS_COMPILE=<RISCV_TOOLCHAIN_PREFIX> sel4vm_defconfig menuconfig
+```
+
+From here you need to go to the "Platform type" section and turn on "Symmetric Multi-Processing",
+and configure the maximum number of CPUs you want.
+
+The configuration will be written to `.config`. To build:
+```console
+make ARCH=riscv CROSS_COMPILE=<RISCV_TOOLCHAIN_PREFIX> .config all
+```
+
+You'll find the image in `arch/riscv/boot`. It'll need to replace the image as `linux`
+for single-core, and `linux-smp` for multi-core in `projects/sel4_riscv_vmm/linux/`.
