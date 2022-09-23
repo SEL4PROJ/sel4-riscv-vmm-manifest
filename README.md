@@ -16,7 +16,7 @@ on a platform that is supported by seL4.
 Dependencies for building natively:
 * [seL4 host dependencies](https://docs.sel4.systems/projects/buildsystem/host-dependencies.html)
 * [RISC-V GNU toolchain](https://github.com/riscv/riscv-gnu-toolchain)
-* RISC-V QEMU, any mainline version >= v5.1 should work.
+* RISC-V QEMU, the stable-6.0 branch from https://gitlab.com/qemu-project/qemu.git works.
 
 ### Single-core
 ```console
